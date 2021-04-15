@@ -31,5 +31,6 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-
-Route::resource('users', UserController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('users', UserController::class);
+});

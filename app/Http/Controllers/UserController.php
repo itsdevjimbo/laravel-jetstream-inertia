@@ -2,22 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    protected $searchables = ['name'];
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
-        return Inertia::render('User/Index',[
-            'users' => $users
+        return Inertia::render('User/Index', [
+            'users' => User::when($request->term, function ($query, $term) {
+                foreach ($this->searchables as $search) {
+                    $query->orWhere($search, 'LIKE', '%'. $term .'%');
+                }
+            })->where('id','!=',auth()->user()->id)->paginate()
         ]);
     }
 
@@ -28,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('User/Create');
     }
 
     /**
@@ -37,9 +45,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['password'] = bcrypt(Str::random(14));
+        User::create($data);
+        return redirect(route('users.index'));
     }
 
     /**
@@ -50,7 +61,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -61,7 +71,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('User/Edit', [
+            'user'  => User::findOrfail($id)
+        ]);
     }
 
     /**
@@ -71,9 +83,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         //
+        $data = $request->validated();
+        $user = User::findOrFail($id);
+        $user->fill($data);
+        $user->save();
+        return redirect(route('users.index'));
     }
 
     /**
@@ -84,6 +101,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect(route('users.index'));
     }
 }

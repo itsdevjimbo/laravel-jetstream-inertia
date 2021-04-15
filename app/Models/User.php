@@ -9,9 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -48,6 +50,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'permissions'        => 'array'
     ];
 
     /**
@@ -57,5 +60,10 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'permissions'
     ];
+
+    public function getPermissionsAttribute(){
+        return $this->getPermissionsViaRoles()->pluck('name');
+    }
 }
