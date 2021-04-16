@@ -88,6 +88,15 @@
                     v-show="dropdownOpen"
                     class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
                 >
+                    <inertia-link
+                        :href="route('profile.show')"
+                        :active="route().current('profile.show')"
+                        as="button"
+                        type="button"
+                        class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white w-max"
+                    >
+                        Profile
+                    </inertia-link>
                     <form method="POST" @submit.prevent="logout">
                         <button
                             type="submit"

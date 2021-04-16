@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <div class="flex flex-row">
-                <inertia-link :href="route('users.index')" class="mr-6">
+                <a :href="route('roles.index')">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6 text-white"
@@ -17,9 +17,9 @@
                             d="M15 19l-7-7 7-7"
                         />
                     </svg>
-                </inertia-link>
+                </a>
                 <h2 class="font-semibold text-xl text-white leading-tight">
-                    Create User
+                    Create role
                 </h2>
             </div>
         </template>
@@ -31,7 +31,7 @@
                         <form @submit.prevent="submit">
                             <div class="grid grid-cols-1 sm:grid-cols-1 mt-4">
                                 <div>
-                                    <label class="text-gray-700" for="username"
+                                    <label class="text-gray-700" for="rolename"
                                         >Name
                                     </label>
                                     <input
@@ -40,18 +40,29 @@
                                         v-model="form.name"
                                     />
                                 </div>
+                            </div>
 
-                                <div class="mt-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-1 mt-4">
+                                <div>
                                     <label
                                         class="text-gray-700"
-                                        for="emailAddress"
-                                        >Email Address</label
+                                        for="permission"
                                     >
-                                    <input
-                                        class="w-full mt-2 rounded-md focus:border-indigo-600"
-                                        type="email"
-                                        v-model="form.email"
-                                    />
+                                        Permissions
+                                    </label>
+                                    <select
+                                        multiple
+                                        v-model="form.permissions"
+                                        class="mt-2 appearance-none rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    >
+                                        <option
+                                            :value="permission.id"
+                                            v-for="permission in permissions"
+                                            :key="permission.id"
+                                        >
+                                            {{ permission.name }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="flex justify-end mt-4">
@@ -76,17 +87,28 @@ export default {
         AppLayout,
         BreezeValidationErrors,
     },
+    props: {
+        role: {
+            type: Object,
+        },
+        permissions: {
+            type: Array,
+        },
+    },
+    mounted() {
+        console.log(this.$page.props);
+    },
     data() {
         return {
             form: this.$inertia.form({
-                name: "",
-                email: "",
+                name: this.role.name,
+                permission: this.role.permissions,
             }),
         };
     },
     methods: {
         submit() {
-            this.form.post(route("users.store"));
+            this.form.put(route("roles.update", { id: this.role.id }));
         },
     },
 };

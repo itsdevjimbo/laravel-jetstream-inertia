@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-white leading-tight">
-                Users
+                Roles
             </h2>
         </template>
         <div class="py-4">
@@ -10,11 +10,11 @@
                 <data-table
                     :headers="headers"
                     :data="data.data"
-                    :create-url="'users.create'"
-                    :edit-url="'users.edit'"
+                    :create-url="'roles.create'"
+                    :edit-url="'roles.edit'"
                     :selectable="true"
                     :mass-destroy="true"
-                    model="User"
+                    model="Role"
                     @onMassDestroy="onMassDestroy($event)"
                     @onSearch="onSearch($event)"
                     @onDelete="onDelete($event)"
@@ -53,10 +53,6 @@ export default {
                 name: "Name",
             },
             {
-                id: "email",
-                name: "Email",
-            },
-            {
                 id: "action",
                 name: "Action",
                 action: true,
@@ -66,21 +62,24 @@ export default {
             },
         ],
     }),
+    mounted() {
+        console.log(this.data.data[0].permissions);
+    },
     methods: {
         onSearch(term) {
             this.$inertia.replace(
-                route("users.index", { ...route().params, term })
+                route("roles.index", { ...route().params, term })
             );
         },
         onDelete(id) {
-            this.$inertia.delete(route("users.destroy", { id }));
+            this.$inertia.delete(route("roles.destroy", { id }));
         },
         onMassDestroy(ids) {
-            this.$inertia.post(route("users.mass-destroy", { ids }));
+            this.$inertia.post(route("roles.mass-destroy", { ids }));
         },
         onPerPageChanged(perPage) {
             this.$inertia.replace(
-                route("users.index", { ...route().params, perPage })
+                route("roles.index", { ...route().params, perPage })
             );
         },
     },

@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    protected $searchables = ['name'];
+    protected $searchables = ['name','email'];
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +21,13 @@ class UserController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('User/Index', [
-            'users' => User::when($request->term, function ($query, $term) {
+            'data' => User::when($request->term, function ($query, $term) {
                 foreach ($this->searchables as $search) {
                     $query->orWhere($search, 'LIKE', '%'. $term .'%');
                 }
-            })->where('id','!=',auth()->user()->id)->paginate()
+            })->where('id', '!=', auth()->user()->id)
+                ->paginate($request->perPage??10)
+                ->appends($request->except('page'))
         ]);
     }
 
@@ -103,6 +105,12 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+        return redirect(route('users.index'));
+    }
+
+    public function massDestroy(Request $request)
+    {
+        User::whereIn('id', $request->ids)->delete();
         return redirect(route('users.index'));
     }
 }
