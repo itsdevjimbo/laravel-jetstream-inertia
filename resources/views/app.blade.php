@@ -1,4 +1,3 @@
-
 @php
     $renderer = Debugbar::getJavascriptRenderer();
 @endphp
