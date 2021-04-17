@@ -60,10 +60,15 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
-        'permissions'
+        'permissions',
+        'role_names'
     ];
 
     public function getPermissionsAttribute(){
         return $this->getPermissionsViaRoles()->pluck('name');
+    }
+
+    public function getRoleNamesAttribute(){
+        return $this->getRoleNames();
     }
 }

@@ -53,6 +53,31 @@
                                         v-model="form.email"
                                     />
                                 </div>
+                                <div
+                                    class="grid grid-cols-1 sm:grid-cols-1 mt-4"
+                                >
+                                    <div>
+                                        <label
+                                            class="text-gray-700"
+                                            for="permission"
+                                        >
+                                            Roles
+                                        </label>
+                                        <select
+                                            multiple
+                                            v-model="form.roles"
+                                            class="mt-2 appearance-none rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        >
+                                            <option
+                                                v-for="role in roles"
+                                                :key="role.id"
+                                                :value="role.name"
+                                            >
+                                                {{ role.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="flex justify-end mt-4">
                                 <button
@@ -76,11 +101,15 @@ export default {
         AppLayout,
         BreezeValidationErrors,
     },
+    props: {
+        roles: Array,
+    },
     data() {
         return {
             form: this.$inertia.form({
                 name: "",
                 email: "",
+                roles: [],
             }),
         };
     },

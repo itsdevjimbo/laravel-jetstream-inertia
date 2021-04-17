@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -38,7 +39,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('User/Create');
+        return Inertia::render('User/Create',[
+            'roles' => Role::all()
+        ]);
     }
 
     /**
@@ -51,7 +54,10 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt(Str::random(14));
-        User::create($data);
+        $user = User::create($data);
+
+        if($request->roles)
+            $user->syncRoles($request->roles);
         return redirect(route('users.index'));
     }
 
@@ -74,7 +80,8 @@ class UserController extends Controller
     public function edit($id)
     {
         return Inertia::render('User/Edit', [
-            'user'  => User::findOrfail($id)
+            'user'  => User::findOrfail($id),
+            'roles' => Role::all()
         ]);
     }
 
@@ -92,6 +99,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->fill($data);
         $user->save();
+
+        $roles = $request->roles ?? [];
+        $user->syncRoles($roles);
+
         return redirect(route('users.index'));
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row gap-2 justify-end mb-3">
+    <div class="flex flex-row space-x-2 justify-end mb-3">
         <danger-button
             v-if="massDestroy"
             @click="onMassDestroy()"
@@ -15,7 +15,7 @@
         </inertia-link>
     </div>
     <div class="mb-4 flex flex-row mb-3 justify-between items-center">
-        <div class="flex flex-row items-center gap-3">
+        <div class="flex flex-row items-center space-x-3">
             <span>Show</span>
             <div class="relative">
                 <select
@@ -30,7 +30,7 @@
             </div>
             <span> Entries </span>
         </div>
-        <div class="flex flex-row gap-3">
+        <div class="flex flex-row space-x-3">
             <div class="relative lg:mx-0 flex-full">
                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
                     <svg

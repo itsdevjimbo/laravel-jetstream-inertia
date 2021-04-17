@@ -62,9 +62,6 @@ export default {
             },
         ],
     }),
-    mounted() {
-        console.log(this.data.data[0].permissions);
-    },
     methods: {
         onSearch(term) {
             this.$inertia.replace(

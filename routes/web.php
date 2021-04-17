@@ -27,12 +27,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::group(['prefix' => 'admin', 'middleware'=> ['auth','verified','role:Super Admin|Admin']],function () {
+
+    Route::get('dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
 
-Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
 
@@ -40,3 +41,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('users/mass-destroy', [UserController::class, 'massDestroy'])->name('users.mass-destroy');
     Route::post('roles/mass-destroy', [RoleController::class, 'massDestroy'])->name('roles.mass-destroy');
 });
+
+
+Route::permanentRedirect('/admin','/admin/dashboard');

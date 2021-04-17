@@ -20,4 +20,5 @@
     <body class="font-sans antialiased">
         @inertia
     </body>
+    <script>window.user = {!! json_encode(auth()->user()) !!}</script>
 </html>
