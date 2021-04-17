@@ -9,6 +9,7 @@ This project is made by laravel + jetstream (Inertia). Its for developers lookin
 ```
     composer install
     npm install
+    npm run dev
 ```
 
 ## Package Used
