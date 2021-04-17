@@ -14,4 +14,5 @@ This project is made by laravel + jetstream (Inertia). Its for developers lookin
 ## Package Used
 
 -   (spatie/laravel-permission)[https://github.com/spatie/laravel-permission]
+-   (barryvdh/laravel-ide-helper)[https://github.com/barryvdh/laravel-ide-helper]
 -   (v-dashboard) [https://github.com/wobsoriano/v-dashboard]
