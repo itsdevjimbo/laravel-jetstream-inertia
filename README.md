@@ -6,11 +6,15 @@ This project is made by laravel + jetstream (Inertia). Its for developers lookin
 
 ## Installation.
 
-```
+1.  `cp cp .env.example .env`
+2.  Set up your database
+3.  ```
     composer install
+    php artisan key:generate
+    php artisan migrate --seed
     npm install
     npm run dev
-```
+    ```
 
 ## Package Used
 

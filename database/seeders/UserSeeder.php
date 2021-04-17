@@ -32,6 +32,6 @@ class UserSeeder extends Seeder
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
-        User::factory()->times(100)->create();
+        User::factory()->times(30)->create();
     }
 }
