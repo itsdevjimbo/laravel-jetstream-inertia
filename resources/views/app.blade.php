@@ -1,3 +1,7 @@
+
+@php
+    $renderer = Debugbar::getJavascriptRenderer();
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -19,6 +23,7 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+            <?php echo $renderer->renderHead() ?>
     </body>
     <script>window.user = {!! json_encode(auth()->user()) !!}</script>
 </html>
