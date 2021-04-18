@@ -56,9 +56,9 @@
                                         class="mt-2 appearance-none rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     >
                                         <option
-                                            :value="permission.id"
                                             v-for="permission in permissions"
                                             :key="permission.id"
+                                            :value="permission.name"
                                         >
                                             {{ permission.name }}
                                         </option>
@@ -95,14 +95,11 @@ export default {
             type: Array,
         },
     },
-    mounted() {
-        console.log(this.$page.props);
-    },
     data() {
         return {
             form: this.$inertia.form({
                 name: this.role.name,
-                permission: this.role.permissions,
+                permissions: this.role.permission_names,
             }),
         };
     },

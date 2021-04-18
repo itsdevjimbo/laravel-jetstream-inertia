@@ -56,7 +56,7 @@
                                         class="mt-2 appearance-none rounded border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     >
                                         <option
-                                            :value="permission.id"
+                                            :value="permission.name"
                                             v-for="permission in permissions"
                                             :key="permission.id"
                                         >

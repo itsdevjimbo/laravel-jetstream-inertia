@@ -18888,13 +18888,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log(this.$page.props);
+    console.log(this.role);
   },
   data: function data() {
     return {
       form: this.$inertia.form({
         name: this.role.name,
-        permission: this.role.permissions
+        permission: this.role.permission_names
       })
     };
   },
