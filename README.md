@@ -16,6 +16,13 @@ This project is made by laravel + jetstream (Inertia). Its for developers lookin
     npm run dev
     ```
 
+## Admin Credential
+
+```
+admin@admin.com
+password
+```
+
 ## Package Used
 
 -   (spatie/laravel-permission)[https://github.com/spatie/laravel-permission]
