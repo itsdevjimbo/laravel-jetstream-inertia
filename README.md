@@ -1,4 +1,4 @@
-# Laravel + Jetstream (Inertiacomposer require --dev barryvdh/laravel-ide-helper) Starter Pack
+# Laravel + Jetstream (Inertia) Starter Pack
 
 ## Introduction.
 
