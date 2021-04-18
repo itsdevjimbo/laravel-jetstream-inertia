@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-row space-x-2 justify-end mb-3">
+        <secondary-button @click="onExport()"> export </secondary-button>
         <danger-button
             v-if="massDestroy"
             @click="onMassDestroy()"
@@ -239,6 +240,8 @@ import Checkbox from "./Checkbox.vue";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import SecondaryButton from "@/Jetstream/SecondaryButton";
 import DangerButton from "@/Jetstream/DangerButton";
+import XLSX from "xlsx";
+import excelHelper from "@/Helpers/excelHelper";
 export default {
     components: {
         MenuDropdown,
@@ -346,6 +349,25 @@ export default {
         },
         onPerPageChange() {
             this.$emit("onPerPageChanged", this.perPage);
+        },
+        onExport() {
+            const jsonData = this.data.map((d) => {
+                const row = {};
+                this.headers.map((h) => {
+                    if (d[h.id] && this.columns[h.id]) {
+                        row[h.name] = d[h.id];
+                    }
+                });
+                return row;
+            });
+            const worksheet = XLSX.utils.json_to_sheet(jsonData);
+            const workbook = {
+                Sheets: { data: worksheet },
+                SheetNames: ["data"],
+            };
+            const wcols = excelHelper.autoFitColumns(jsonData, worksheet);
+            worksheet["!cols"] = wcols;
+            XLSX.writeFile(workbook, `${this.model}s.xlsx`);
         },
     },
 };

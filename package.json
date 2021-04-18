@@ -28,6 +28,8 @@
     },
     "dependencies": {
         "@tailwindcss/ui": "^0.7.2",
-        "mitt": "^2.1.0"
+        "mitt": "^2.1.0",
+        "string-pixel-width": "^1.10.0",
+        "xlsx": "^0.16.9"
     }
 }
