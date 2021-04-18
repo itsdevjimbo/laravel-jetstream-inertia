@@ -1,84 +1,44 @@
 <template>
-    <app-layout>
+    <backend-layout v-if="canSeeBackend">
         <template #header>
             <h2
-                :class="isAdmin ? 'text-white' : 'text-gray-800'"
-                class="font-semibold text-xl leading-tight"
+                :class="canSeeBackend ? '' : 'text-gray-800'"
+                class="font-semibold text-xl leading-tight text-white"
             >
                 Profile
             </h2>
         </template>
-
-        <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <update-profile-information-form :user="$page.props.user" />
-
-                    <jet-section-border />
-                </div>
-
-                <div v-if="$page.props.jetstream.canUpdatePassword">
-                    <update-password-form class="mt-10 sm:mt-0" />
-
-                    <jet-section-border />
-                </div>
-
-                <div
-                    v-if="
-                        $page.props.jetstream.canManageTwoFactorAuthentication
-                    "
-                >
-                    <two-factor-authentication-form class="mt-10 sm:mt-0" />
-
-                    <jet-section-border />
-                </div>
-
-                <logout-other-browser-sessions-form
-                    :sessions="sessions"
-                    class="mt-10 sm:mt-0"
-                />
-
-                <template
-                    v-if="$page.props.jetstream.hasAccountDeletionFeatures"
-                >
-                    <jet-section-border />
-
-                    <delete-user-form class="mt-10 sm:mt-0" />
-                </template>
-            </div>
-        </div>
-    </app-layout>
+        <show-content :sessions="sessions"></show-content>
+    </backend-layout>
+    <frontend-layout v-else>
+        <template #header>
+            <h2 class="font-semibold text-xl leading-tight text-gray-800">
+                Profile
+            </h2>
+        </template>
+        <show-content :sessions="sessions"></show-content>
+    </frontend-layout>
 </template>
 
 <script>
-import FrontEndLayout from "@/Layouts/AppLayout";
+import FrontendLayout from "@/Layouts/AppLayout";
 import BackendLayout from "@/Layouts/Backend/Default";
-import DeleteUserForm from "./DeleteUserForm";
-import JetSectionBorder from "@/Jetstream/SectionBorder";
-import LogoutOtherBrowserSessionsForm from "./LogoutOtherBrowserSessionsForm";
-import TwoFactorAuthenticationForm from "./TwoFactorAuthenticationForm";
-import UpdatePasswordForm from "./UpdatePasswordForm";
-import UpdateProfileInformationForm from "./UpdateProfileInformationForm";
+import ShowContent from "./ShowContent";
 export default {
     props: ["sessions"],
 
     components: {
-        "app-layout":
-            window.user.role_names.includes("Admin") ||
-            window.user.role_names.includes("Super Admin")
-                ? BackendLayout
-                : FrontEndLayout,
-        DeleteUserForm,
-        JetSectionBorder,
-        LogoutOtherBrowserSessionsForm,
-        TwoFactorAuthenticationForm,
-        UpdatePasswordForm,
-        UpdateProfileInformationForm,
+        BackendLayout,
+        FrontendLayout,
+        ShowContent,
     },
     data: () => ({
-        isAdmin:
-            window.user.role_names.includes("Admin") ||
-            window.user.role_names.includes("Super Admin"),
+        canSeeBackend: false,
     }),
+    mounted() {
+        this.canSeeBackend = this.$page.props.user.permissions.includes(
+            "see-backend"
+        );
+    },
 };
 </script>

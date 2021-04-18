@@ -78,7 +78,7 @@ class UserController extends Controller
     public function edit($id)
     {
         return Inertia::render('User/Edit', [
-            'user'  => User::findOrfail($id),
+            'userData'  => User::findOrfail($id),
             'roles' => Role::all()
         ]);
     }

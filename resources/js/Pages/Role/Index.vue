@@ -72,7 +72,7 @@ export default {
             this.$inertia.delete(route("roles.destroy", { id }));
         },
         onMassDestroy(ids) {
-            this.$inertia.post(route("roles.mass-destroy", { ids }));
+            this.$inertia.post(route("roles.massDestroy", { ids }));
         },
         onPerPageChanged(perPage) {
             this.$inertia.replace(

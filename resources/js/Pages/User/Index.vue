@@ -76,7 +76,7 @@ export default {
             this.$inertia.delete(route("users.destroy", { id }));
         },
         onMassDestroy(ids) {
-            this.$inertia.post(route("users.mass-destroy", { ids }));
+            this.$inertia.post(route("users.massDestroy", { ids }));
         },
         onPerPageChanged(perPage) {
             this.$inertia.replace(

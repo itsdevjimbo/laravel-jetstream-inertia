@@ -103,21 +103,21 @@ export default {
         BreezeValidationErrors,
     },
     props: {
-        user: Object,
+        userData: Object,
         roles: Array,
     },
     data() {
         return {
             form: this.$inertia.form({
-                name: this.user.name,
-                email: this.user.email,
-                roles: this.user.role_names,
+                name: this.userData.name,
+                email: this.userData.email,
+                roles: this.userData.role_names,
             }),
         };
     },
     methods: {
         submit() {
-            this.form.put(route("users.update", { id: this.user.id }));
+            this.form.put(route("users.update", { id: this.userData.id }));
         },
     },
 };

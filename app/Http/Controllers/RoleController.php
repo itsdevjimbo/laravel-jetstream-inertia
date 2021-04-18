@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -17,6 +18,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Auth::user()->can('role-list'))
+            return abort(403);
+
         return Inertia::render('Role/Index', [
             'data' => Role::when($request->term, function ($query, $term) {
                 foreach ($this->searchables as $search) {
@@ -34,6 +38,9 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->can('role-create'))
+            return abort(403);
+
         return Inertia::render('Role/Create',[
             'permissions'   => Permission::all()
         ]);
@@ -47,6 +54,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->can('role-create'))
+            return abort(403);
+
         $request->validate([
             'name'          =>  'required|string',
             'permissions'   => 'array',
@@ -76,6 +86,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->can('role-edit'))
+            return abort(403);
+
         return Inertia::render('Role/Edit', [
             'role'  => Role::findOrfail($id),
             'permissions'   => Permission::all()
@@ -91,6 +104,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->can('role-edit'))
+            return abort(403);
+
         $request->validate([
             'name'          =>  'required|string',
             'permissions'   => 'array',
@@ -111,6 +127,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->can('role-delete'))
+            return abort(403);
+
         $role = Role::findOrFail($id);
         $role->delete();
         return redirect(route('roles.index'));
@@ -118,6 +137,9 @@ class RoleController extends Controller
 
     public function massDestroy(Request $request)
     {
+        if(!Auth::user()->can('role-delete'))
+            return abort(403);
+
         Role::whereIn('id', $request->ids)->delete();
         return redirect(route('roles.index'));
     }

@@ -27,7 +27,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::group(['prefix' => 'admin', 'middleware'=> ['auth','verified','role:Super Admin|Admin']],function () {
+Route::group(['prefix' => 'admin', 'middleware'=> ['auth','verified','permission:see-backend']],function () {
 
     Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
@@ -38,8 +38,8 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['auth','verified','role:Super
     Route::resource('roles', RoleController::class);
 
     // Mass Destroy
-    Route::post('users/mass-destroy', [UserController::class, 'massDestroy'])->name('users.mass-destroy');
-    Route::post('roles/mass-destroy', [RoleController::class, 'massDestroy'])->name('roles.mass-destroy');
+    Route::post('users/mass-destroy', [UserController::class, 'massDestroy'])->name('users.massDdestroy');
+    Route::post('roles/mass-destroy', [RoleController::class, 'massDestroy'])->name('roles.massDdestroy');
 });
 
 

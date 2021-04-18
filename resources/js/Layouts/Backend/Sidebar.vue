@@ -44,13 +44,13 @@
 
             <nav class="mt-10">
                 <inertia-link
-                    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
                     :class="[
                         route().current('dashboard')
                             ? activeClass
                             : inactiveClass,
                     ]"
                     :href="route('dashboard')"
+                    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
                 >
                     <svg
                         class="h-5 w-5"
@@ -71,13 +71,14 @@
                     <span class="mx-4">Dashboard</span>
                 </inertia-link>
                 <inertia-link
-                    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
+                    v-if="$page.props.user.permissions.includes('user-list')"
                     :class="[
                         route().current('users.*')
                             ? activeClass
                             : inactiveClass,
                     ]"
                     :href="route('users.index')"
+                    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
                     ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5"
@@ -96,13 +97,14 @@
                     <span class="mx-4">Users</span>
                 </inertia-link>
                 <inertia-link
-                    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
+                    v-if="$page.props.user.permissions.includes('role-list')"
                     :class="[
                         route().current('roles.*')
                             ? activeClass
                             : inactiveClass,
                     ]"
                     :href="route('roles.index')"
+                    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

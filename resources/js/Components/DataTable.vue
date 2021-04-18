@@ -1,6 +1,8 @@
 <template>
     <div class="flex flex-row space-x-2 justify-end mb-3">
-        <secondary-button @click="onExport()"> export </secondary-button>
+        <secondary-button @click="onExport()" :disabled="data.length == 0">
+            export
+        </secondary-button>
         <danger-button
             v-if="massDestroy"
             @click="onMassDestroy()"
