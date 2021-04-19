@@ -6,7 +6,7 @@ This project is made by laravel + jetstream (Inertia). Its for developers lookin
 
 ## Installation.
 
-1.  `cp cp .env.example .env`
+1.  `cp .env.example .env`
 2.  Set up your database
 3.  ```
     composer install
@@ -25,7 +25,7 @@ password
 
 ## Package Used
 
--   (spatie/laravel-permission)[https://github.com/spatie/laravel-permission]
--   (barryvdh/laravel-ide-helper)[https://github.com/barryvdh/laravel-ide-helper]
--   (barryvdh/laravel-debugbar) [https://github.com/barryvdh/laravel-debugbar]
--   (v-dashboard) [https://github.com/wobsoriano/v-dashboard]
+-   [spatie/laravel-permission](https://github.com/spatie/laravel-permission)
+-   [barryvdh/laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)
+-   [barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)
+-   [v-dashboard](https://github.com/wobsoriano/v-dashboard)
